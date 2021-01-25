@@ -44,3 +44,12 @@ const toArray = (...args) => args;
 console.log(toArray(1, 2, 3, 4, 5, 'sam'));
 
 // =========================================================
+
+function Circle(radius) {
+  this.radius = radius;
+  this.draw = function () {
+    console.log('draw');
+  };
+}
+
+const circle = new Circle(4);
