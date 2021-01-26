@@ -1,22 +1,13 @@
 const http = require('http');
 
-const server = http.createServer((req, res) => {
-  const url = req.url;
+const express = require('express');
 
-  if (url === '/') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.write('<html>');
-    res.write('<head>');
-    res.write('</head>');
-    res.write('<body>');
-    res.write('<h1>Hello World</h1>');
-    res.write('</body>');
-    res.write('</html>');
-    return res.end();
-  }
-});
+const app = express();
+
+const server = http.createServer(app);
 
 const PORT = 3000;
 
-server.listen(PORT, () => `Server started on port ${PORT}`);
+server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+//
