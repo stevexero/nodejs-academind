@@ -21,22 +21,48 @@ const http = require('http');
 // });
 
 // *** and the hip next gen js way...
-const server = http.createServer((request, response) => {
-  console.log(request.url, request.method, request.headers);
-  //   process.exit(); // not typically called in code, to keep the event loop running
-  response.setHeader('Content-Type', 'text/html');
-  response.write('<html>');
-  response.write('<body>');
-  response.write('<h1>Hello World!</h1>');
-  response.write('</body>');
-  response.write('</html>');
-  response.end();
-});
+// const server = http.createServer((request, response) => {
+//   console.log(request.url, request.method, request.headers);
+//   //   process.exit(); // not typically called in code, to keep the event loop running
+//   response.setHeader('Content-Type', 'text/html');
+//   response.write('<html>');
+//   response.write('<body>');
+//   response.write('<h1>Hello World!</h1>');
+//   response.write('</body>');
+//   response.write('</html>');
+//   response.end();
+// });
 
-server.listen(3000); // takes the port and the hostname
+// server.listen(3000); // takes the port and the hostname
 
 // console.log(http);
 
+// =========================================== ROUTING
+
+const server = http.createServer((req, res) => {
+  const url = req.url;
+  if (url === '/') {
+    res.write('<html>');
+    res.write('<body>');
+    res.write(
+      '<form action="/message" method="POST"><input type="text" name="message" /><button type="submit">Submit</button></form>'
+    );
+    res.write('</body>');
+    res.write('</html>');
+    return res.end(); // If the if statement is hit, the return exits the function and won't execute any code afterwards
+  }
+  res.setHeader('Content-Type', 'text/html');
+  res.write('<html>');
+  res.write('<body>');
+  res.write('<h1>Hello World!</h1>');
+  res.write('</body>');
+  res.write('</html>');
+  res.end();
+});
+
+server.listen(3000);
+
+// =========================================== HTTP OBJECT
 /* returns
 
 {
