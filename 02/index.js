@@ -39,8 +39,11 @@ const http = require('http');
 
 // =========================================== ROUTING
 
+const fs = require('fs');
+
 const server = http.createServer((req, res) => {
   const url = req.url;
+  const method = req.method;
   if (url === '/') {
     res.write('<html>');
     res.write('<body>');
@@ -50,6 +53,12 @@ const server = http.createServer((req, res) => {
     res.write('</body>');
     res.write('</html>');
     return res.end(); // If the if statement is hit, the return exits the function and won't execute any code afterwards
+  }
+  if (url === '/message' && method === 'POST') {
+    fs.writeFileSync('message.txt', 'Dummy Text');
+    res.statusCode = 302;
+    res.setHeader('Location', '/');
+    return res.end();
   }
   res.setHeader('Content-Type', 'text/html');
   res.write('<html>');
