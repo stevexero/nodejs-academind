@@ -60,14 +60,16 @@ const server = http.createServer((req, res) => {
       console.log(chunk);
       body.push(chunk);
     });
-    req.on('end', () => {
+    return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split('=')[1]; // Takes the string to the right of the equal sign. ex: message=hello = 'hello'
-      fs.writeFileSync('message.txt', message);
+      // fs.writeFileSync('message.txt', message); // Writes the file synchronously, meaning no code is executed until this file is written.
+      fs.writeFile('message.txt', message, (err) => {
+        res.statusCode = 302;
+        res.setHeader('Location', '/');
+        return res.end();
+      });
     });
-    res.statusCode = 302;
-    res.setHeader('Location', '/');
-    return res.end();
   }
   res.setHeader('Content-Type', 'text/html');
   res.write('<html>');
