@@ -22,7 +22,15 @@ const http = require('http');
 
 // *** and the hip next gen js way...
 const server = http.createServer((request, response) => {
-  console.log(request);
+  console.log(request.url, request.method, request.headers);
+  //   process.exit(); // not typically called in code, to keep the event loop running
+  response.setHeader('Content-Type', 'text/html');
+  response.write('<html>');
+  response.write('<body>');
+  response.write('<h1>Hello World!</h1>');
+  response.write('</body>');
+  response.write('</html>');
+  response.end();
 });
 
 server.listen(3000); // takes the port and the hostname
