@@ -55,7 +55,16 @@ const server = http.createServer((req, res) => {
     return res.end(); // If the if statement is hit, the return exits the function and won't execute any code afterwards
   }
   if (url === '/message' && method === 'POST') {
-    fs.writeFileSync('message.txt', 'Dummy Text');
+    const body = [];
+    req.on('data', (chunk) => {
+      console.log(chunk);
+      body.push(chunk);
+    });
+    req.on('end', () => {
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split('=')[1]; // Takes the string to the right of the equal sign. ex: message=hello = 'hello'
+      fs.writeFileSync('message.txt', message);
+    });
     res.statusCode = 302;
     res.setHeader('Location', '/');
     return res.end();
