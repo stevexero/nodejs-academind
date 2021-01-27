@@ -12,7 +12,8 @@ app.use('/favicon.ico', (req, res, next) => {
   res.sendStatus(204);
 });
 
-app.use(adminRoutes); // considers our routes in the admin.js routes. Also, order matters.
+// /admin is a filter that must be added to the route
+app.use('/admin', adminRoutes); // considers our routes in the admin.js routes. Also, order matters.
 
 app.use(shopRoutes); // Again, this order matters. However, if using get, its an exact match. Just keep this in mind
 
