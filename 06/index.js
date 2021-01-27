@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
@@ -7,6 +8,9 @@ const shopRoutes = require('./routes/shop');
 // the order of the imports dont matter
 
 app.use(express.urlencoded({ extended: false }));
+
+// Granting access to the public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/favicon.ico', (req, res, next) => {
   res.sendStatus(204);
@@ -18,7 +22,7 @@ app.use('/admin', adminRoutes); // considers our routes in the admin.js routes. 
 app.use(shopRoutes); // Again, this order matters. However, if using get, its an exact match. Just keep this in mind
 
 app.use((req, res, next) => {
-  res.status(404).send('<h1>Page Not Found</h1>');
+  res.status(404).sendFile(path.join(__dirname, 'views', 'not-found.html'));
 });
 
 const PORT = 3000;
