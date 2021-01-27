@@ -2,25 +2,22 @@ const express = require('express');
 
 const app = express();
 
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+// the order of the imports dont matter
+
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/favicon.ico', (req, res, next) => {
   res.sendStatus(204);
 });
 
-app.use('/add-product', (req, res, next) => {
-  res.send(
-    '<form action="/product" method="POST"><input type="text" name="title" /><button type="submit">Add Product</button></form>'
-  );
-});
+app.use(adminRoutes); // considers our routes in the admin.js routes. Also, order matters.
 
-app.use('/product', (req, res, next) => {
-  console.log(req.body);
-  res.redirect('/');
-});
+app.use(shopRoutes); // Again, this order matters. However, if using get, its an exact match. Just keep this in mind
 
-app.use('/', (req, res, next) => {
-  res.send('<h1>Hello from express</h1>');
+app.use((req, res, next) => {
+  res.status(404).send('<h1>Page Not Found</h1>');
 });
 
 const PORT = 3000;
