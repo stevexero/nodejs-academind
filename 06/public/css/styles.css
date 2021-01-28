@@ -21,6 +21,10 @@ a {
   color: white;
 }
 
+.active {
+  color: dodgerblue;
+}
+
 .main-header nav {
   height: 100%;
   display: flex;

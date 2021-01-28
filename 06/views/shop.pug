@@ -1,0 +1,19 @@
+extends layouts/main-layout.pug
+
+block content
+    main
+        if prods.length > 0
+            div
+                each product in prods
+                    article
+                        header
+                            h1 #{product.title}
+                        div
+                            img(src="https://cdn.pixabay.com/photo/2016/04/30/13/12/sutterlin-1362879_1280.jpg", alt="A Book" width="200px")
+                        div
+                            h2 $19.99
+                            p An interesting book
+                        div
+                            button Add to Cart
+        else
+            h1 No Products
