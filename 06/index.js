@@ -6,9 +6,11 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 // the order of the imports dont matter
+
+const notFoundControllers = require('./controllers/error');
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -20,14 +22,17 @@ app.use('/favicon.ico', (req, res, next) => {
 });
 
 // /admin is a filter that must be added to the route
-app.use('/admin', adminData.routes); // considers our routes in the admin.js routes. Also, order matters.
+app.use('/admin', adminRoutes); // considers our routes in the admin.js routes. Also, order matters.
 
 app.use(shopRoutes); // Again, this order matters. However, if using get, its an exact match. Just keep this in mind
 
-app.use((req, res, next) => {
-  // res.status(404).sendFile(path.join(__dirname, 'views', 'not-found.html'));
-  res.status(404).render('404', { docTitle: '404' });
-});
+app.use(notFoundControllers.get404);
+
+// CUT
+// (req, res, next) => {
+//   // res.status(404).sendFile(path.join(__dirname, 'views', 'not-found.html'));
+//   res.status(404).render('404', { docTitle: '404' });
+// }
 
 const PORT = 3000;
 
