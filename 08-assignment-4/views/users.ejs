@@ -1,0 +1,16 @@
+<%- include('layouts/head.ejs') %>
+
+</head>
+
+<body>
+    <%- include('layouts/nav.ejs') %>
+    <h1>Users</h1>
+    <% if (users.length > 0) { %>
+    <% for (let user of users) { %>
+    <h2><%= user.title %></h2>
+    <% } %>
+    <% } else { %>
+    <h2>Add Some Users</h2>
+    <% } %>
+
+    <%- include('layouts/end.ejs') %>
