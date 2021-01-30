@@ -1,8 +1,10 @@
 // const products = [];
 const Product = require('../models/product');
 
+// render is relative to the views folder
+
 exports.getAddProduct = (req, res, next) => {
-  res.render('add-product', { docTitle: 'Add Product', path: '/admin/add-product' });
+  res.render('admin/add-product', { docTitle: 'Add Product', path: '/admin/add-product' });
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -14,6 +16,6 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
-    res.render('shop', { prods: products, docTitle: 'Shop', path: '/shop' });
+    res.render('shop/product-list', { prods: products, docTitle: 'Shop', path: '/shop' });
   });
 };
